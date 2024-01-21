@@ -1,0 +1,82 @@
+---
+title: "Introduction to Multilevel Modeling with the Tidyverse"
+---
+
+> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+
+# Title: Introduction to Multilevel Modeling with the Tidyverse
+
+## Objective: This lab will provide an introduction to multilevel modeling using the Tidyverse package in R.
+
+# Lab Overview
+In this lab, you will learn how to perform multilevel modeling using R and the Tidyverse package. Multilevel modeling, also known as hierarchical linear modeling or mixed-effects modeling, is a statistical technique used to analyze data that has a hierarchical or nested structure. We will explore multilevel modeling through a practical example.
+
+# Prerequisites
+Basic knowledge of R programming
+Familiarity with the Tidyverse package
+Understanding of linear regression and mixed-effects models
+Installing Required Packages
+First, we need to install the required packages. If you haven't installed them yet, run the following commands:
+
+
+```{r}
+install.packages("tidyverse")
+install.packages("lme4")
+install.packages("lmerTest")
+```
+
+Loading Required Packages
+Now, let's load the required packages.
+
+```{r}
+library(tidyverse)
+library(lme4)
+library(lmerTest)
+```
+Loading the Dataset
+For this lab, we will use a built-in dataset from the lme4 package called sleepstudy. This dataset contains information about the reaction times of subjects who participated in a sleep deprivation study.
+
+```{r}
+data("sleepstudy")
+head(sleepstudy)
+
+```
+Data Exploration
+Let's explore the structure of the dataset.
+
+```{r}
+glimpse(sleepstudy)
+```
+Visualizing the Data
+Before building the multilevel model, it's helpful to visualize the data. Let's plot the reaction times against the days of sleep deprivation, with each subject represented by a different color.
+
+```{r}
+sleepstudy %>%
+  ggplot(aes(x = Days, y = Reaction, group = Subject, color = factor(Subject))) +
+  geom_line() +
+  labs(title = "Reaction Time vs Days of Sleep Deprivation",
+       x = "Days of Sleep Deprivation",
+       y = "Reaction Time (ms)",
+       color = "Subject")
+```
+       
+Building the Multilevel Model
+Now we will build a multilevel model using the lmer() function from the lme4 package. The model will predict the reaction time based on the number of days of sleep deprivation, while accounting for the random effects of subjects.
+
+```{r}
+multilevel_model <- lmer(Reaction ~ Days + (1|Subject), data = sleepstudy)
+summary(multilevel_model)
+```
+
+Model Interpretation
+The output provides information on the fixed effects, random effects, and model fit. We can interpret the fixed effects coefficients and significance levels to understand the relationship between reaction time and days of sleep deprivation.
+
+Model Diagnostics
+We can perform model diagnostics using the plot() function, which will generate residual plots.
+
+```{r}
+plot(multilevel_model)
+```
+
+Conclusion
+In this lab, you learned how to perform multilevel modeling using R and the Tidyverse package. You explored a real dataset, visualized the data, built a multilevel model, and interpreted the results.
