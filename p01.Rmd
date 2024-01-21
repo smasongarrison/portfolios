@@ -7,7 +7,10 @@ title: "Portfolio 1"
 ```{r load-packages, message=FALSE}
 library(tidyverse) 
 library(tidyr)
+data("fish_encounters")
 ```
+
+Test to see if this change really works. 
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum eget nibh vel est aliquet iaculis at placerat sem. Aenean faucibus iaculis ultricies. Nullam consequat odio in ultricies ullamcorper. Etiam venenatis in est vitae ullamcorper. Nam vitae urna ut dolor rhoncus aliquet at vel neque. Quisque tristique leo finibus nisi interdum, sit amet tempor risus viverra. Donec mollis vulputate sodales. Nunc ornare, leo quis euismod eleifend, eros mi maximus felis, vel varius lacus dui eget nibh. Duis vitae nunc nisl. Donec accumsan aliquam elit, eu fringilla quam pulvinar eget.
 
@@ -17,7 +20,7 @@ Mauris in ligula mauris. Curabitur facilisis pharetra metus eget lobortis. In eg
 
 ```{r}
 # Create a barplot of the number of fish encounters by species
-ggplot(data = fish_encounters, aes(x = species, y = count)) +
+ggplot(data = fish_encounters, aes(x = station, y = seen)) +
   geom_bar(stat = "identity") +
   labs(x = "Species", y = "Number of Fish Encounters")
   
@@ -29,7 +32,7 @@ Sed mollis purus faucibus leo finibus, ut pharetra nibh elementum. Nulla id orci
 
 ```{r}
 # Create a barplot of the number of fish encounters by species
-ggplot(data = fish_encounters, aes(x = species, y = count)) +
+ggplot(data = fish_encounters, aes(x = station, y = seen)) +
   geom_bar(stat = "identity") +
   labs(x = "Species", y = "Number of Fish Encounters")
   
@@ -40,7 +43,7 @@ Mauris placerat in velit a pharetra. Nulla viverra bibendum lectus, ut lobortis 
 
 ```{r}
 # Create a barplot of the number of fish encounters by species
-ggplot(data = fish_encounters, aes(x = species, y = count)) +
+ggplot(data = fish_encounters, aes(x = station, y = seen)) +
   geom_bar(stat = "identity") +
   labs(x = "Species", y = "Number of Fish Encounters")
   
