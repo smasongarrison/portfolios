@@ -1,5 +1,8 @@
 ---
 title: "Portfolio 1"
+output:
+  html_document:
+    df_print: paged
 ---
 
 <center>
@@ -55,5 +58,33 @@ This will then create a copy (clone) of Mason’s repository on your Github acco
 3. Typically this should all be correct. In that case, just click <strong> Clone</strong>.
 
 Notice that a folder with the relevant files has now been created on your computer, and you can access the folder from within Github Desktop.
+
+
+<br>
+
+<strong>How do I find the relevant repository on Github Desktop?</strong>
+
+If the relevant repository does not show up, then on the upper left, go to Current Repository. You can change that to whatever repository you are interested in.
+
+<br>
+
+<strong>How do I get the relevant files into Rstudio so that I can work on them?</strong>
+
+1. Within the relevant repository / folder, click on the <strong>.Rproj</strong> file.  .Rproj stands for the entire project related to that assignment. It will pull up all the files you need within Rstudio. 
+
+2. Then, on the <strong>files</strong> pane, click on the .rmd file to pull up the R markdown file. 
+
+<br>
+
+<strong>How (Where) to answer the questions that Mason asks in her assignments?</strong>
+
+Short Version: You will provide your answers in the R Markdown document. 
+
+Longer Version: I initially thought of an R markdown file as analagous to an SPSS syntax file.  That is accurate in the sense that the R markdown file runs code sequentially, but it also can be considered as analagous to a word document that you can embed R code in. One nice element of this is that you can include both your code and your answers to questions within the Markdown document, unlike my class, where you had to write up the answers in a separate word document or by hand. 
+
+
+
+
+
 
 
