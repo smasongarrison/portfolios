@@ -82,6 +82,50 @@ Short Version: You will provide your answers in the R Markdown document.
 
 Longer Version: I initially thought of an R markdown file as analagous to an SPSS syntax file.  That is accurate in the sense that the R markdown file runs code sequentially, but it also can be considered as analagous to a word document that you can embed R code in. One nice element of this is that you can include both your code and your answers to questions within the Markdown document, unlike my class, where you had to write up the answers in a separate word document or by hand. 
 
+<br>
+
+<strong>How (Where) are my answers stored?</strong>
+
+When you run (knit) the R markdown (.rmd) file, it will create an .md file.  This is similar to an output file created by SPSS.  This .md file can then be provided to Mason.  Note that – unlike with SPSS – it will typically be necessary to provide Mason the .md file, rather than just the R markdown (.rmd) file.  The reason for this difference is that the R markdown file will often contain commands that are specific to your workflow (e.g., the path to access files, what packages have already been loaded, etc.)  So if Mason just runs your R markdown file, she will likely get an error message (with SPSS, if you have the syntax file and the data file it’s straightforward to reproduce the output file).
+
+<br>
+
+<strong>How can I make my files visible so that Mason can see them?</strong>
+
+When you make changes to your R Markdown file, these will be stored only on your personal computer. These need to be transferred to your Github repository, so that Mason can see them. To do this, you’ll need to do two things: (1) commit your changes, and (2) push to your github repository (your repository goes by the name ‘origin’). (Think of ‘push’ as sending it out from your computer to the internet.)
+
+Within Github Desktop:
+1. Make sure the .rmd and .md files are checked. For example:
+
+<img src="p01/committing and pushing.PNG" alt="Committing changes and Pushing files to origin" width="700"/>
+
+2. Type in your summary (e.g., “progress made!”), and click on <strong>Commit to Main</strong>. 
+
+3. Then Click <strong>Push to Origin</strong>. 
+
+Once you’ve done all that, you will have committed your changes (essentially saying, yes, I want these changes to be included), and sent them to your origin (read: your Github repository for this specific lab). 
+
+<br>
+
+<strong>How can I notify Mason that my lab is done?</strong>
+
+Mason will not know that you have completed the lab until you tell her. To notify her of that, you open an “issue.” To do that:
+
+1. Go to Mason’s github, and access the relevant lab (i.e., the one you cloned).
+2. Click <strong>Issues</strong>
+3. Click <strong>New Issue</strong>
+4. Add a title
+5. Under description, write:
+   a. @smasongarrison
+   b. the link to your repository (e.g., https://github.com/estone65/lab5/ )
+
+<br>
+
+<strong>How can I read Mason’s comments on my lab?</strong>
+
+Mason is likely to comment by making a ‘pull request’ within your R markdown document.  Because it isn’t her document (it’s yours), she can make a copy of the file and make changes to that, but she can’t make changes to *your* document. The pull request is essentially a list of suggested changes, which can take the form of comments within your document(s). The changes will be color-coded.
+
+You will receive an email notifying you of the pull request. Click on the pull request to view the changes.
 
 
 
