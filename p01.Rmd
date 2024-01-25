@@ -111,7 +111,7 @@ Once you’ve done all that, you will have committed your changes (essentially s
 
 Mason will not know that you have completed the lab until you tell her. To notify her of that, you open an “issue.” To do that:
 
-1. Go to Mason’s github, and access the relevant lab (i.e., the one you cloned).
+1. Go to Mason’s github (not yours), and access the relevant lab (i.e., the one you cloned).
 2. Click <strong>Issues</strong>
 3. Click <strong>New Issue</strong>
 4. Add a title
