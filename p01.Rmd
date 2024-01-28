@@ -32,6 +32,8 @@ Once you’ve done that, the relevant repository should show up. For example, fo
 
 <img src="p01/lab 1 repository.PNG" alt="Lab 1 Repository" width="700"/>
 
+![Lab 1 Repository](p01/lab 1 repository.PNG)
+
 <br>
 
 ### How do I get the relevant files on my computer?
