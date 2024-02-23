@@ -3,3 +3,74 @@ title: "Portfolio 2"
 ---
 
 > The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
+
+The overarching aim of this project is to learn how to use a new package that is not part of the course, but which is relevant to my research. A secondary aim (though not an initially intended one) is to learn more about github, what differentiates sub-folders in a repository from repositories themselves, what a .git folder is, etc. 
+
+More specifically in terms of the first goal, the first aim is to learn to use the TOSTER R package for doing equivalence tests (see Lakens, 2017), https://osf.io/q253c/. I will be using some data from a study with a former graduate student (Bridget Hayes) for an article we're working on (currently has an R&R). I don't intend to publish this analysis -- I'm just trying to get an intuitive sense of how large a difference might exist given that we found no evidence of one. Thus the second aim of the first goal is to learn how to read in data that wasn't provided to me. The end result will hopefully be an equivalence test on a portion of our data. 
+
+### Load packages and data
+
+```{r load-packages, message = FALSE}
+library(TOSTER) 
+library(tidyverse) 
+```
+
+```{r load-data, message = FALSE}
+display <- read_csv("p02/data/display_type.csv")
+```
+
+Note there are two dependent variables that I'm working with for this project: gist risk perception, and verbatim risk perception.
+
+```{r get descriptive statistics for gist, message = FALSE}
+toster_inputs_gist <- display %>%
+  group_by(display_condition) %>%
+  summarize(mean = mean(gist_p, na.rm = TRUE), sd = sd(gist_p, na.rm = TRUE), n = sum(!is.na(gist_p)))
+```
+
+```{r get descriptive statistics for verbatim, message = FALSE}
+toster_inputs_verbatim <- display %>%
+  group_by(display_condition) %>%
+  summarize(mean = mean(Average_Z_LN_plusone_verb_items, na.rm = TRUE), 
+            sd = sd(Average_Z_LN_plusone_verb_items, na.rm = TRUE), 
+            n = sum(!is.na(Average_Z_LN_plusone_verb_items)))
+```
+
+Examining small, small-medium, and medium effect sizes, using Cohen's classification from ages ago
+
+```{r conduct TOSTER analysis for gist, message = FALSE}
+TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
+TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.20, high_eqbound_d = 0.20, alpha = 0.05, var.equal = FALSE)
+TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.10, high_eqbound_d = 0.10, alpha = 0.05, var.equal = FALSE)
+```
+
+Using the raw score formula for replication and practice ... 
+(Used excel to get mean differences corresponding to the above Cohen's d's)
+
+```{r conduct TOSTER analysis for gist with mean differences, message = FALSE}
+TOSTtwo.raw(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound = -1.155583283, high_eqbound = 1.155583283, alpha = 0.05, var.equal = FALSE)
+TOSTtwo.raw(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound = -0.770388855, high_eqbound = 0.770388855, alpha = 0.05, var.equal = FALSE)
+TOSTtwo.raw(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound = -0.385194428, high_eqbound = 0.385194428, alpha = 0.05, var.equal = FALSE)
+```
+
+These match, thankfully. Given that, I'm only going to do the first analysis for verbatim.
+
+```{r conduct TOSTER analysis for verbatim, message = FALSE}
+TOSTtwo(m1 = -0.08914941, m2 = -0.11634700, sd1 = 0.7748390, sd2 = 0.8841862, n1 = 84, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
+TOSTtwo(m1 = -0.08914941, m2 = -0.11634700, sd1 = 0.7748390, sd2 = 0.8841862, n1 = 84, n2 = 87, low_eqbound_d = -0.20, high_eqbound_d = 0.20, alpha = 0.05, var.equal = FALSE)
+TOSTtwo(m1 = -0.08914941, m2 = -0.11634700, sd1 = 0.7748390, sd2 = 0.8841862, n1 = 84, n2 = 87, low_eqbound_d = -0.10, high_eqbound_d = 0.10, alpha = 0.05, var.equal = FALSE)
+```
+
+In terms of my main goal of learning how to use a package and prepare data to be analyzed by R, I mostly succeeded.  I created a portion of my data file and read that in successfully, and installed TOSTER and used that for the analysis. I am quite sure that there are things I could have done more efficiently (which will be worth discussing), but I am glad I was able to get it to work. 
+
+In terms of the applied research question going into this ... for both gist and verbatim risk perception, we had previously found nearly identical means for graphical and numerical presentations. We had no a priori effect size about how large a difference we'd like to detect, so I wanted to get a sense of how large a difference we could be confident didn't exist. I was quite sure we'd be able to detect a Cohen's d of .30, and probably .20, but I had my doubts about .10.
+
+It turns out my intuition was somewhat overly optimstic. Despite all the lectures I've given on how unless you have very large n it's very difficult to detect small to medium effect sizes, I thought that we would be able to confidently say that the effect size was not greater than .20. That turned out to be incorrect. We are able to say it's not greater than .30, but even that test just reached significance for both gist and verbatim risk perception.
+
+As one final test, the raw gist scale (not the verbatim one) is meaningful, and it's of interest to see if we could detect a 1-point difference on that.
+
+```{r conduct TOSTER analysis for gist with 1-point mean differences, message = FALSE}
+
+TOSTtwo.raw(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound = -1.0, high_eqbound = 1.0, alpha = 0.05, var.equal = FALSE)
+```
+
+The test wasn't quite significant, but extremely close with p = .0509. It's a 15-point scale so a 1-point difference isn't that large, but it is still meaningful and it's a little disappointing not to have stronger evidence that the effect is no greater than that.
