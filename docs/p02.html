@@ -274,13 +274,6 @@ $(document).ready(function () {
 </div>
 
 
-<blockquote>
-<p>The projects should be numbered consecutively (i.e., in the order in
-which you began them), and should include for each project a description
-of the goal, the product (computer program, hand graph, computer graph,
-etc.), the data, and some interpretation. Reports must be reproducible
-and of high quality in terms of writing, grammar, presentation, etc.</p>
-</blockquote>
 <p>The overarching aim of this project is to learn how to use a new
 package that is not part of the course, but which is relevant to my
 research. A secondary aim (though not an initially intended one) is to
@@ -314,12 +307,27 @@ project: gist risk perception, and verbatim risk perception.</p>
             n = sum(!is.na(Average_Z_LN_plusone_verb_items)))</code></pre>
 <p>Examining small, small-medium, and medium effect sizes, using Cohen’s
 classification from ages ago</p>
+<pre class="r"><code>tsum_TOST(m1 = toster_inputs_gist$mean[1], m2 = toster_inputs_gist$mean[2], sd1 = toster_inputs_gist$sd[1], sd2 = toster_inputs_gist$sd[2], n1 = toster_inputs_gist$n[1], n2 = toster_inputs_gist$n[2], low_eqbound = -0.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type=&quot;SMD&quot;)</code></pre>
+<pre><code>## 
+## Welch Modified Two-Sample t-Test
+## 
+## The equivalence test was significant, t(170) = -1.910, p = 2.89e-02
+## The null hypothesis test was non-significant, t(170) = 0.0571, p = 9.55e-01
+## NHST: don&#39;t reject null significance hypothesis that the effect is equal to zero 
+## TOST: reject null equivalence hypothesis
+## 
+## TOST Results 
+##                  t  df p.value
+## t-test      0.0571 170   0.955
+## TOST Lower  2.0244 170   0.022
+## TOST Upper -1.9102 170   0.029
+## 
+## Effect Sizes 
+##                Estimate     SE              C.I. Conf. Level
+## Raw            0.033536 0.5873 [-0.9378, 1.0049]         0.9
+## Hedges&#39;s g(av) 0.008669 0.1534 [-0.2411, 0.2584]         0.9
+## Note: SMD confidence intervals are an approximation. See vignette(&quot;SMD_calcs&quot;).</code></pre>
 <pre class="r"><code>TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)</code></pre>
-<pre><code>## Warning: `TOSTtwo()` was deprecated in TOSTER 0.4.0.
-## ℹ Please use `tsum_TOST()` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
 <p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist-1.png" width="672" /></p>
 <pre><code>## TOST results:
 ## t-value lower bound: 2.02    p-value lower bound: 0.022
@@ -404,11 +412,6 @@ classification from ages ago</p>
 excel to get mean differences corresponding to the above Cohen’s
 d’s)</p>
 <pre class="r"><code>TOSTtwo.raw(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound = -1.155583283, high_eqbound = 1.155583283, alpha = 0.05, var.equal = FALSE)</code></pre>
-<pre><code>## Warning: `TOSTtwo.raw()` was deprecated in TOSTER 0.4.0.
-## ℹ Please use `tsum_TOST()` instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.</code></pre>
 <p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist%20with%20mean%20differences-1.png" width="672" /></p>
 <pre><code>## TOST results:
 ## t-value lower bound: 2.02    p-value lower bound: 0.022

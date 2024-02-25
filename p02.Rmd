@@ -2,7 +2,6 @@
 title: "Portfolio 2"
 ---
 
-> The projects should be numbered consecutively (i.e., in the order in which you began them), and should include for each project a description of the goal, the product (computer program, hand graph, computer graph, etc.), the data, and some interpretation. Reports must be reproducible and of high quality in terms of writing, grammar, presentation, etc.
 
 The overarching aim of this project is to learn how to use a new package that is not part of the course, but which is relevant to my research. A secondary aim (though not an initially intended one) is to learn more about github, what differentiates sub-folders in a repository from repositories themselves, what a .git folder is, etc. 
 
@@ -38,7 +37,13 @@ toster_inputs_verbatim <- display %>%
 Examining small, small-medium, and medium effect sizes, using Cohen's classification from ages ago
 
 ```{r conduct TOSTER analysis for gist, message = FALSE}
+tsum_TOST(m1 = toster_inputs_gist$mean[1], m2 = toster_inputs_gist$mean[2], sd1 = toster_inputs_gist$sd[1], sd2 = toster_inputs_gist$sd[2], n1 = toster_inputs_gist$n[1], n2 = toster_inputs_gist$n[2], low_eqbound = -0.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type="SMD")
+
+
 TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
+
+
+
 TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.20, high_eqbound_d = 0.20, alpha = 0.05, var.equal = FALSE)
 TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.10, high_eqbound_d = 0.10, alpha = 0.05, var.equal = FALSE)
 ```
