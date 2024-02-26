@@ -295,6 +295,7 @@ a portion of our data.</p>
 <pre class="r"><code>library(TOSTER) 
 library(tidyverse) </code></pre>
 <pre class="r"><code>display &lt;- read_csv(&quot;p02/data/display_type.csv&quot;)</code></pre>
+<pre class="r"><code>options(scipen = 999)</code></pre>
 <p>Note there are two dependent variables that I’m working with for this
 project: gist risk perception, and verbatim risk perception.</p>
 <pre class="r"><code>toster_inputs_gist &lt;- display %&gt;%
@@ -307,9 +308,24 @@ project: gist risk perception, and verbatim risk perception.</p>
             n = sum(!is.na(Average_Z_LN_plusone_verb_items)))</code></pre>
 <p>Examining small, small-medium, and medium effect sizes, using Cohen’s
 classification from ages ago</p>
-<pre class="r"><code>tsum_TOST(m1 = toster_inputs_gist$mean[1], m2 = toster_inputs_gist$mean[2], sd1 = toster_inputs_gist$sd[1], sd2 = toster_inputs_gist$sd[2], n1 = toster_inputs_gist$n[1], n2 = toster_inputs_gist$n[2], low_eqbound = -0.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type=&quot;SMD&quot;)</code></pre>
+<pre class="r"><code>#df_tost&lt;- toster_inputs_gist
+#loweq &lt;- -.3
+
+#tsum_TOST(m1 = df_tost$mean[1], m2 = df_tost$mean[2], sd1 = df_tost$sd[1], sd2 = df_tost$sd[2], n1 = df_tost$n[1], n2 = df_tost$n[2], low_eqbound = -.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type=&quot;SMD&quot;)
+
+#tsum_TOST(m1 = df_tost$mean[1], m2 = df_tost$mean[2], sd1 = df_tost$sd[1], sd2 = df_tost$sd[2], n1 = df_tost$n[1], n2 = df_tost$n[2], low_eqbound = -.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type=&quot;SMD&quot;)
+
+#df_tost&lt;- toster_inputs_verbatim
+
+tsum_TOST(m1 = toster_inputs_gist$mean[toster_inputs_gist$display_condition==1], 
+          m2 = toster_inputs_gist$mean[toster_inputs_gist$display_condition==2], 
+          sd1 = toster_inputs_gist$sd[toster_inputs_gist$display_condition==1], 
+          sd2 = toster_inputs_gist$sd[toster_inputs_gist$display_condition==2], 
+          n1 = toster_inputs_gist$n[toster_inputs_gist$display_condition==1], 
+          n2 = toster_inputs_gist$n[toster_inputs_gist$display_condition==2], 
+          low_eqbound = -0.30, high_eqbound = 0.30, alpha=0.05, var.equal = FALSE,eqbound_type=&quot;SMD&quot;)</code></pre>
 <pre><code>## 
-## Welch Modified Two-Sample t-Test
+## Welch Two Sample t-test
 ## 
 ## The equivalence test was significant, t(170) = -1.910, p = 2.89e-02
 ## The null hypothesis test was non-significant, t(170) = 0.0571, p = 9.55e-01
@@ -327,35 +343,14 @@ classification from ages ago</p>
 ## Raw            0.033536 0.5873 [-0.9378, 1.0049]         0.9
 ## Hedges&#39;s g(av) 0.008669 0.1534 [-0.2411, 0.2584]         0.9
 ## Note: SMD confidence intervals are an approximation. See vignette(&quot;SMD_calcs&quot;).</code></pre>
-<pre class="r"><code>TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)</code></pre>
+<pre class="r"><code>#toster_inputs_gist$mean[toster_inputs_gist$display_condition==1]
+
+#TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
+
+
+
+TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.20, high_eqbound_d = 0.20, alpha = 0.05, var.equal = FALSE)</code></pre>
 <p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist-1.png" width="672" /></p>
-<pre><code>## TOST results:
-## t-value lower bound: 2.02    p-value lower bound: 0.022
-## t-value upper bound: -1.91   p-value upper bound: 0.029
-## degrees of freedom : 170
-## 
-## Equivalence bounds (Cohen&#39;s d):
-## low eqbound: -0.3 
-## high eqbound: 0.3
-## 
-## Equivalence bounds (raw scores):
-## low eqbound: -1.1555 
-## high eqbound: 1.1555
-## 
-## TOST confidence interval:
-## lower bound 90% CI: -0.938
-## upper bound 90% CI:  1.005
-## 
-## NHST confidence interval:
-## lower bound 95% CI: -1.126
-## upper bound 95% CI:  1.193
-## 
-## Equivalence Test Result:
-## The equivalence test was significant, t(170) = -1.910, p = 0.0289, given equivalence bounds of -1.155 and 1.155 (on a raw scale) and an alpha of 0.05.
-## Null Hypothesis Test Result:
-## The null hypothesis test was non-significant, t(170) = 0.0571, p = 0.955, given an alpha of 0.05.</code></pre>
-<pre class="r"><code>TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.20, high_eqbound_d = 0.20, alpha = 0.05, var.equal = FALSE)</code></pre>
-<p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist-2.png" width="672" /></p>
 <pre><code>## TOST results:
 ## t-value lower bound: 1.37    p-value lower bound: 0.086
 ## t-value upper bound: -1.25   p-value upper bound: 0.106
@@ -382,7 +377,7 @@ classification from ages ago</p>
 ## Null Hypothesis Test Result:
 ## The null hypothesis test was non-significant, t(170) = 0.0571, p = 0.955, given an alpha of 0.05.</code></pre>
 <pre class="r"><code>TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.10, high_eqbound_d = 0.10, alpha = 0.05, var.equal = FALSE)</code></pre>
-<p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist-3.png" width="672" /></p>
+<p><img src="p02_files/figure-html/conduct%20TOSTER%20analysis%20for%20gist-2.png" width="672" /></p>
 <pre><code>## TOST results:
 ## t-value lower bound: 0.713   p-value lower bound: 0.238
 ## t-value upper bound: -0.599  p-value upper bound: 0.275

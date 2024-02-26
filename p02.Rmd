@@ -18,6 +18,11 @@ library(tidyverse)
 display <- read_csv("p02/data/display_type.csv")
 ```
 
+```{r turning-off-scientific-notation, message = FALSE}
+options(scipen = 999)
+```
+
+
 Note there are two dependent variables that I'm working with for this project: gist risk perception, and verbatim risk perception.
 
 ```{r get descriptive statistics for gist, message = FALSE}
@@ -37,10 +42,26 @@ toster_inputs_verbatim <- display %>%
 Examining small, small-medium, and medium effect sizes, using Cohen's classification from ages ago
 
 ```{r conduct TOSTER analysis for gist, message = FALSE}
-tsum_TOST(m1 = toster_inputs_gist$mean[1], m2 = toster_inputs_gist$mean[2], sd1 = toster_inputs_gist$sd[1], sd2 = toster_inputs_gist$sd[2], n1 = toster_inputs_gist$n[1], n2 = toster_inputs_gist$n[2], low_eqbound = -0.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type="SMD")
+#df_tost<- toster_inputs_gist
+#loweq <- -.3
 
+#tsum_TOST(m1 = df_tost$mean[1], m2 = df_tost$mean[2], sd1 = df_tost$sd[1], sd2 = df_tost$sd[2], n1 = df_tost$n[1], n2 = df_tost$n[2], low_eqbound = -.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type="SMD")
 
-TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
+#tsum_TOST(m1 = df_tost$mean[1], m2 = df_tost$mean[2], sd1 = df_tost$sd[1], sd2 = df_tost$sd[2], n1 = df_tost$n[1], n2 = df_tost$n[2], low_eqbound = -.30, high_eqbound = 0.30, alpha = 0.05, var.equal = FALSE,eqbound_type="SMD")
+
+#df_tost<- toster_inputs_verbatim
+
+tsum_TOST(m1 = toster_inputs_gist$mean[toster_inputs_gist$display_condition==1], 
+          m2 = toster_inputs_gist$mean[toster_inputs_gist$display_condition==2], 
+          sd1 = toster_inputs_gist$sd[toster_inputs_gist$display_condition==1], 
+          sd2 = toster_inputs_gist$sd[toster_inputs_gist$display_condition==2], 
+          n1 = toster_inputs_gist$n[toster_inputs_gist$display_condition==1], 
+          n2 = toster_inputs_gist$n[toster_inputs_gist$display_condition==2], 
+          low_eqbound = -0.30, high_eqbound = 0.30, alpha=0.05, var.equal = FALSE,eqbound_type="SMD")
+
+#toster_inputs_gist$mean[toster_inputs_gist$display_condition==1]
+
+#TOSTtwo(m1 = 7.458824, m2 = 7.425287, sd1 = 3.815860, sd2 = 3.886866, n1 = 85, n2 = 87, low_eqbound_d = -0.30, high_eqbound_d = 0.30, alpha = 0.05, var.equal = FALSE)
 
 
 
