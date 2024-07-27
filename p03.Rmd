@@ -143,7 +143,7 @@ Finally got something to work on the first try.
 
 Now I'm going to try to make my data frame have a name that includes the values entered in the function.
 
-```{r creating the simulate_r_dataframe2 function, message=FALSE}
+```{r creating the simulate_r_dataframe3 function, message=FALSE}
 simulate_r_dataframe3 <- function(r, n) {
   corr_values <- replicate(10000, simulate_r_practice2(r, n))
   simulate_r_ds <- data.frame(id = 1:10000, corr = corr_values, pop_r = r, n = n)
@@ -296,27 +296,102 @@ final_simulate_individual_x_y <- function(r,n) {
  df_name <- paste0("individual_x_y_", r, "_", n)
  assign(df_name, x_y_data, envir = .GlobalEnv) 
  calculated_corr <- cor(x_y_data$x, x_y_data$y)
- correlation_data <- data.frame(r = r, calculated_corr = calculated_corr)
- corr_df_name <- paste0("correlation_x_y_", r, "_", n)
- assign(corr_df_name, correlation_data, envir = .GlobalEnv)
+ return(calculated_corr)
 } 
 ```
 
 
-```{r trying_out_function, message=FALSE}
+```{r trying_out_function2, message=FALSE}
 final_simulate_individual_x_y(.20,1000)
 ```
 
-```{r now creating a function to do the above 10,000 times, message=FALSE}
+```{r now creating a function to do the above 10000 times, message=FALSE}
 simulate_repeated_x_y <- function(r, n) {
-  x_y_values <- replicate(100, final_simulate_individual_x_y (r, n))
-  simulate_r_ds_fromxy <- data.frame(id = 1:100, corr = corr_values, pop_r = r, n = n)
-  df_name <- paste0("final_simulated_data_", r, "_", n)
-  assign(df_name, simulate_r_ds_fromxy, envir = .GlobalEnv) 
+  correlations <- replicate(10000, final_simulate_individual_x_y (r, n))
+  correlation_results <- data.frame(id = 1:100, corr = correlations, pop_r = r, n = n)
+  df_name <- paste0("simulated_r_from_xy", r, "_", n)
+  assign(df_name, correlation_results, envir = .GlobalEnv) 
 }
 
 ```
 
+```{r trying_out_function_again, message=FALSE}
+simulate_repeated_x_y(.20,50)
+```
 
 
+Okay, I'm now at the point where I was at when I just simulated the code directly, so I'll use the same logic as before and just change the file names. 
+
+
+```{r creating the data sets for xy - final, message=FALSE}
+simulate_repeated_x_y(.10, 20)
+simulate_repeated_x_y(.10, 50)
+simulate_repeated_x_y(.10, 100)
+simulate_repeated_x_y(.20, 20)
+simulate_repeated_x_y(.20, 50)
+simulate_repeated_x_y(.20, 100)
+simulate_repeated_x_y(.30, 20)
+simulate_repeated_x_y(.30, 50)
+simulate_repeated_x_y(.30, 100)
+simulate_repeated_x_y(.40, 20)
+simulate_repeated_x_y(.40, 50)
+simulate_repeated_x_y(.40, 100)
+simulate_repeated_x_y(.50, 20)
+simulate_repeated_x_y(.50, 50)
+simulate_repeated_x_y(.50, 100)
+
+```
+
+now need to bind the data files .
+
+```{r binding the data files xy, message=FALSE}
+simulated_data_final_xy <- bind_rows(simulated_r_from_xy0.1_20, simulated_r_from_xy0.1_50, simulated_r_from_xy0.1_100, simulated_r_from_xy0.2_20, simulated_r_from_xy0.2_50, simulated_r_from_xy0.2_100, simulated_r_from_xy0.3_20, simulated_r_from_xy0.3_50, simulated_r_from_xy0.3_100, simulated_r_from_xy0.4_20, simulated_r_from_xy0.4_50, simulated_r_from_xy0.4_100, simulated_r_from_xy0.5_20, simulated_r_from_xy0.5_50, simulated_r_from_xy0.5_100)
+
+```
+
+Adding in the number of negative corrs. 
+
+
+```{r computing_negative_corrs_final_xy, message=FALSE}
+simulated_data_final_xy <- simulated_data_final_xy %>%
+  mutate (neg_corr_xy = case_when (
+    corr < 0 ~ 1, 
+    corr >= 0 ~ 0 ))
+perc_neg_corr_final_xy <- simulated_data_final_xy %>%
+   group_by(pop_r, n) %>%
+  summarize(perc_neg_xy = mean(neg_corr_xy))
+  
+```
+
+Yea, this worked!!  And the results are very similar to the ones when I simulated r directly, so that's good reliability. I'm not sure to what extent the differences are due to chance or the more accurate approach in the later case, so I'll use the latter approach.
+
+The last thing is to make some graphs. I'm going to make two types.
+
+One is to make histograms. I'll do this for just the correlations of .20
+
+```{r binding the .20 data files xy, message=FALSE}
+simulated_data_final_xy_.20 <- bind_rows(simulated_r_from_xy0.2_20, simulated_r_from_xy0.2_50, simulated_r_from_xy0.2_100)
+```
+
+```{r creating-facted_histogram_for_.20, message=FALSE}
+ggplot(data = simulated_data_final_xy_.20, mapping = aes(x = corr)) +
+  geom_histogram() + 
+  facet_grid (~ n) +
+  labs(title = "Distribution of Sample Correlations, r = .20") +
+  scale_y_continuous(name = "Count", breaks = NULL)
+```
+
+That worked well. I'm not sure precisely what I'm going to do yet for class (whether pass out the above or something different), but it should be straightforward to adapt this to anything else.
+
+The second is to make a line graph for percentage of negative correlations. This is a little trickier. 
+
+```{r creating-line_graph, message=FALSE}
+ggplot(data = perc_neg_corr_final_xy, mapping = aes(x = pop_r, y = perc_neg_xy, group = n, color = factor(n))) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Percent Negative Sample Correlations per Population Correlation and n",
+       x = "population correlation", y = "% negative sample correlations", color = "n")
+```
+
+Okay, cool. This worked well. 
 
